@@ -55,23 +55,7 @@ virtualenv() {
     python "$buildpack/vendor/virtualenv-1.11.6/virtualenv.py" "$@"
 }
 
-if test -f $build/Godeps
-then
-    name=$(<$build/Godeps jq -r .ImportPath)
-    ver=$(<$build/Godeps jq -r .GoVersion)
-elif test -d $build/Godeps
-then
-    name=$(<$build/Godeps/Godeps.json jq -r .ImportPath)
-    ver=$(<$build/Godeps/Godeps.json jq -r .GoVersion)
-elif test -f $build/.godir
-then
-    name=$(cat $build/.godir)
-    ver=go${GOVERSION:-1.4.2}
-else
-    echo >&2 " !     Godeps are required. For instructions:"
-    echo >&2 " !     https://medium.com/@freeformz/hello-world-with-go-heroku-38295332f07b"
-    exit 1
-fi
+ver=go${GOVERSION:-1.4.2}
 
 file=${GOFILE:-$ver.$(uname|tr A-Z a-z)-amd64$(platext $ver).tar.gz}
 url=${GOURL:-$(urlfor $ver $file)}
@@ -125,9 +109,7 @@ then
     echo " done"
 fi
 
-p=$GOPATH/src/$name
-mkdir -p $p
-cp -R $build/* $p
+cp -R $build/* $GOPATH
 
 # Default to $SOURCE_VERSION environment variable
 GO_LINKER_VALUE=${SOURCE_VERSION}
