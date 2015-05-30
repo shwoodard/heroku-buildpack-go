@@ -89,13 +89,8 @@ PATH=$GOROOT/bin:$PATH
 
 mkdir -p $GOPATH
 
-if ! (test -d $build/Godeps || (which hg >/dev/null && which bzr >/dev/null))
+if ! (which hg >/dev/null && which bzr >/dev/null)
 then
-    echo
-    echo "       Tired of waiting for bzr and hg?"
-    echo "       Try github.com/kr/godep for faster deploys."
-    echo
-
     echo -n "       Installing Virtualenv..."
     virtualenv --python $python --distribute --never-download --prompt='(venv) ' $venv > /dev/null 2>&1
     . $venv/bin/activate > /dev/null 2>&1
@@ -137,15 +132,10 @@ then
 fi
 
 unset GIT_DIR # unset git dir or it will mess with goinstall
+
 cd $GOPATH
-if test -e $build/Godeps
-then
-    echo "-----> Running: godep go install ${FLAGS[@]} ./..."
-    godep go install "${FLAGS[@]}" ./...
-else
-    echo "-----> Running: go get ${FLAGS[@]} ./..."
-    go get "${FLAGS[@]}" ./...
-fi
+echo "-----> Running: go get ${FLAGS[@]} ./..."
+go get "${FLAGS[@]}" ./...
 
 rm -rf $build/.heroku
 
