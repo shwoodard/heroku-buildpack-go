@@ -3,6 +3,8 @@
 
 set -exo pipefail
 
+if [ -z $GOPKG_NAME ]; then echo "Must set GOPKG_NAME to root pkg name"; exit 1; fi
+
 # Go releases for Darwin beginning with 1.2rc1
 # have included more than one build, depending
 # on the specific version of Mac OS X. Try to
@@ -105,20 +107,10 @@ then
     echo " done"
 fi
 
-#cd $build
-#TARGET_DIR=$GOPATH/$(git remote -v | \
-  #grep -i 'git@github.com' | \
-  #head -n 1 | \
-  #grep -o 'git[^ ]\+' | \
-  #sed -E -e 's/^[^@]*@?([^:]+):([^\.]+).*/\1\/\2/')
-#cd -
-
-#echo $TARGET_DIR
-#mkdir -p $TARGET_DIR
-cp -R $build/* $GOPATH/
-cd $GOPATH
-go list ./... | grep -v /vendor/
-cd -
+$TARGET_DIR=$GOPATH/$GOPKG_NAME
+echo $TARGET_DIR
+mkdir -p $TARGET_DIR
+cp -R $build/* $TARGET_DIR/
 
 # Default to $SOURCE_VERSION environment variable
 GO_LINKER_VALUE=${SOURCE_VERSION}
