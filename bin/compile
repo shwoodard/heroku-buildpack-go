@@ -105,7 +105,15 @@ then
     echo " done"
 fi
 
-cp -R $build/* $GOPATH
+TARGET_DIR=$GOPATH/$(git remote -v | \
+  grep -i 'git@github.com' | \
+  head -n 1 | \
+  grep -o 'git[^ ]\+' | \
+  sed -E -e 's/^[^@]*@?([^:]+):([^\.]+).*/\1\/\2/')
+
+echo $TARGET_DIR
+mkdir -p $TARGET_DIR
+cp -R $build/* $TARGET_DIR
 
 # Default to $SOURCE_VERSION environment variable
 GO_LINKER_VALUE=${SOURCE_VERSION}
@@ -135,7 +143,6 @@ unset GIT_DIR # unset git dir or it will mess with goinstall
 
 cd $GOPATH
 echo `pwd`
-echo $(find . -name "*.go" -maxdepth 4)
 echo "-----> Running: go get ${FLAGS[@]} ./..."
 go get "${FLAGS[@]}" ./...
 
