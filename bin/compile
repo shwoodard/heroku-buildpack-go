@@ -105,17 +105,20 @@ then
     echo " done"
 fi
 
-cd $build
-TARGET_DIR=$GOPATH/$(git remote -v | \
-  grep -i 'git@github.com' | \
-  head -n 1 | \
-  grep -o 'git[^ ]\+' | \
-  sed -E -e 's/^[^@]*@?([^:]+):([^\.]+).*/\1\/\2/')
-cd -
+#cd $build
+#TARGET_DIR=$GOPATH/$(git remote -v | \
+  #grep -i 'git@github.com' | \
+  #head -n 1 | \
+  #grep -o 'git[^ ]\+' | \
+  #sed -E -e 's/^[^@]*@?([^:]+):([^\.]+).*/\1\/\2/')
+#cd -
 
-echo $TARGET_DIR
-mkdir -p $TARGET_DIR
-cp -R $build/* $TARGET_DIR
+#echo $TARGET_DIR
+#mkdir -p $TARGET_DIR
+cp -R $build/* $GOPATH/
+cd $GOPATH
+go list ./... | grep -v /vendor/
+cd -
 
 # Default to $SOURCE_VERSION environment variable
 GO_LINKER_VALUE=${SOURCE_VERSION}
