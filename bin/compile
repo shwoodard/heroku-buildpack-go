@@ -108,7 +108,7 @@ then
     echo " done"
 fi
 
-TARGET_DIR=$GOPATH/$GOPKG_NAME
+TARGET_DIR=$GOPATH/src/$GOPKG_NAME
 mkdir -p $TARGET_DIR
 cp -R $build/* $TARGET_DIR/
 
