@@ -3,8 +3,6 @@
 
 set -exo pipefail
 
-echo $(git remote -v)
-
 if [ ! -f $3/GOPKG_NAME ]; then echo "Must set GOPKG_NAME to root pkg name"; exit 1; fi
 GOPKG_NAME=$(cat $3/GOPKG_NAME)
 
@@ -111,7 +109,6 @@ then
 fi
 
 TARGET_DIR=$GOPATH/$GOPKG_NAME
-echo $TARGET_DIR
 mkdir -p $TARGET_DIR
 cp -R $build/* $TARGET_DIR/
 
@@ -141,8 +138,7 @@ fi
 
 unset GIT_DIR # unset git dir or it will mess with goinstall
 
-cd $GOPATH
-echo `pwd`
+cd $TARGET_DIR
 echo "-----> Running: go get ${FLAGS[@]} ./..."
 go get "${FLAGS[@]}" ./...
 
