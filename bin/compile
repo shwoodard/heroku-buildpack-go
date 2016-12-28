@@ -3,7 +3,7 @@
 
 set -exo pipefail
 
-ls -la $3
+echo $(git remote -v)
 
 if [ ! -f $3/GOPKG_NAME ]; then echo "Must set GOPKG_NAME to root pkg name"; exit 1; fi
 GOPKG_NAME=$(cat $3/GOPKG_NAME)
