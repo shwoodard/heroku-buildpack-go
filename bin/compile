@@ -130,19 +130,18 @@ then
 fi
 
 # If $GO_LINKER_SYMBOL and GO_LINKER_VALUE are set, tell the linker to DTRT
-if [ -n "$GO_LINKER_SYMBOL" -a -n "$GO_LINKER_VALUE" ]; then
-  FLAGS=(-ldflags "-X $GO_LINKER_SYMBOL $GO_LINKER_VALUE")
+FLAGS=(-tags heroku)
+if [ -n "$GO_LINKER_SYMBOL" -a -n "$GO_LINKER_VALUE" ]
+then
+  FLAGS=(${FLAGS[@]} -ldflags "-X $GO_LINKER_SYMBOL $GO_LINKER_VALUE")
 fi
 
 unset GIT_DIR # unset git dir or it will mess with goinstall
 
 cd $TARGET_DIR
+echo `ls -la`
 echo "-----> Running: go get ${FLAGS[@]} ./..."
-if [ -z $FLAGS ]; then
-  go get ./...
-else
-  go get "${FLAGS[@]}" ./...
-fi
+go get "${FLAGS[@]}" ./...
 
 rm -rf $build/.heroku
 
