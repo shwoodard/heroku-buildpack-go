@@ -5,7 +5,8 @@ set -exo pipefail
 
 ls -la $3
 
-if [ -z $GOPKG_NAME ]; then echo "Must set GOPKG_NAME to root pkg name"; exit 1; fi
+if [ ! -f $3/GOPKG_NAME ]; then echo "Must set GOPKG_NAME to root pkg name"; exit 1; fi
+GOPKG_NAME=$(cat $3/GOPKG_NAME)
 
 # Go releases for Darwin beginning with 1.2rc1
 # have included more than one build, depending
