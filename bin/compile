@@ -3,7 +3,7 @@
 
 set -exo pipefail
 
-echo $ENV_DIR
+ls -la $3
 
 if [ -z $GOPKG_NAME ]; then echo "Must set GOPKG_NAME to root pkg name"; exit 1; fi
 
