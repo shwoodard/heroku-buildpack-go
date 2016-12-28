@@ -105,11 +105,13 @@ then
     echo " done"
 fi
 
+cd $build
 TARGET_DIR=$GOPATH/$(git remote -v | \
   grep -i 'git@github.com' | \
   head -n 1 | \
   grep -o 'git[^ ]\+' | \
   sed -E -e 's/^[^@]*@?([^:]+):([^\.]+).*/\1\/\2/')
+cd -
 
 echo $TARGET_DIR
 mkdir -p $TARGET_DIR
