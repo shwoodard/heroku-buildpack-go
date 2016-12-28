@@ -134,7 +134,7 @@ fi
 unset GIT_DIR # unset git dir or it will mess with goinstall
 
 cd $GOPATH
-echo ${find . -name "*.go" -maxdepth 4}
+echo $(find . -name "*.go" -maxdepth 4)
 echo "-----> Running: go get ${FLAGS[@]} ./..."
 go get "${FLAGS[@]}" ./...
 
