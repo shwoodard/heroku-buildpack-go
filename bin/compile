@@ -55,7 +55,7 @@ virtualenv() {
     python "$buildpack/vendor/virtualenv-1.11.6/virtualenv.py" "$@"
 }
 
-ver=go${GOVERSION:-1.4.2}
+ver=go${GOVERSION:-1.7.3}
 
 file=${GOFILE:-$ver.$(uname|tr A-Z a-z)-amd64$(platext $ver).tar.gz}
 url=${GOURL:-$(urlfor $ver $file)}
