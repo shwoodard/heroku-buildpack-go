@@ -141,7 +141,7 @@ unset GIT_DIR # unset git dir or it will mess with goinstall
 cd $TARGET_DIR
 echo `ls -la`
 echo "-----> Running: go build ${FLAGS[@]} ."
-go build "${FLAGS[@]}" . -o $HOME/bin/main
+go build -o $HOME/bin/main "${FLAGS[@]}" .
 
 rm -rf $build/.heroku
 
