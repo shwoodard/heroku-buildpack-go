@@ -1,7 +1,7 @@
 #!/bin/bash
 #it usage: bin/compile <build-dir> <cache-dir> <env-dir>
 
-set -exo pipefail
+set -eo pipefail
 
 if [ ! -f $3/GOPKG_NAME ]; then echo "Must set GOPKG_NAME to root pkg name"; exit 1; fi
 GOPKG_NAME=$(cat $3/GOPKG_NAME)
@@ -139,7 +139,6 @@ fi
 unset GIT_DIR # unset git dir or it will mess with goinstall
 
 cd $TARGET_DIR
-echo `ls -la`
 echo "-----> Running: go install -v ${FLAGS[@]} ."
 go install -v "${FLAGS[@]}" .
 cd -
